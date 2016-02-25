@@ -171,7 +171,7 @@ void HelloWorld::onTouchMoved(Touch* touch, Event* event) {
 
 bool HelloWorld::onContactBegin(PhysicsContact& contact)
 {
-	/*
+	
 	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();
 	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();
 	int tagA = spriteA->getTag();
@@ -203,6 +203,6 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact)
 	gameOverScene->getLayer()->getLabel()->setString("You Lose!");
 	Director::getInstance()->replaceScene(gameOverScene);
 	}
-	*/
+	
 	return true;
 }
