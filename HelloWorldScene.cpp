@@ -1,8 +1,9 @@
 #include "HelloWorldScene.h"
 #include "GameOverScene.h"
-
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 USING_NS_CC;
-
+#define BACKGROUND_MUSIC_SFX  "backgroundmusic.mp3"
 Scene* HelloWorld::createScene()
 {
 	// 'scene' is an autorelease object
@@ -37,8 +38,11 @@ bool HelloWorld::init()
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto winSize = Director::getInstance()->getVisibleSize();
 
-
+	auto background = Sprite::create("background.png");
+	background->setPosition(Vec2(winSize.width * 0.5, winSize.height * 0.5));
+	this->addChild(background, 0);
 
 	edgeSp = Sprite::create();
 	auto boundBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
@@ -80,9 +84,9 @@ bool HelloWorld::init()
 	this->addChild(paddle);
 
 	
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 11; i++) {
 
-	static int padding = 100;
+	static int padding = 20;
 
 	auto block = Sprite::create("blocks.png");
 	auto blockBody = PhysicsBody::createBox(block->getContentSize(), PHYSICSBODY_MATERIAL_DEFAULT);
@@ -116,7 +120,7 @@ bool HelloWorld::init()
 
 
 
-
+	SimpleAudioEngine::getInstance()->playBackgroundMusic(BACKGROUND_MUSIC_SFX, true);
 	this->schedule(schedule_selector(HelloWorld::tick),0);
 
 	
@@ -156,7 +160,7 @@ void HelloWorld::tick(float dt)
 	if (isWin == true)
 	{
 	auto gameOverScene = GameOverScene::create();
-	gameOverScene->getLayer()->getLabel()->setString("You Win!");
+	gameOverScene->getLayer()->getLabel()->setString("Congratulations Pokeman!!!");
 	Director::getInstance()->replaceScene(gameOverScene);
 	}
 	
@@ -200,7 +204,7 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact)
 	if ((tagA == 0 || tagB  == 0 )& (ball->getPositionY() <= paddle->getPositionY()))
 	{
 	auto gameOverScene = GameOverScene::create();
-	gameOverScene->getLayer()->getLabel()->setString("You Lose!");
+	gameOverScene->getLayer()->getLabel()->setString("Go back to school, Pokeboy!");
 	Director::getInstance()->replaceScene(gameOverScene);
 	}
 	
